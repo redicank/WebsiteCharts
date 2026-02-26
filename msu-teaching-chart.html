@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MSU Teaching Evaluations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --kyle:   #18453B;   /* MSU green */
+      --dept:   #97A2A0;
+      --covid:  #C8A951;
+      --bg:     #FAFAF7;
+      --surface:#FFFFFF;
+      --border: #E8E4DC;
+      --text:   #1A1714;
+      --muted:  #7A7570;
+      --stripe: #F5F3EF;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2.5rem 2.5rem 2rem;
+      max-width: 860px;
+      width: 100%;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.06);
+      animation: fadeUp 0.6s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--text);
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--kyle);
+    }
+
+    .scale-note {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
+      font-weight: 300;
+    }
+
+    .stat-block {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--kyle);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.3rem;
+    }
+
+    /* Role divider labels */
+    .role-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 1.2rem 0 0.5rem;
+      opacity: 0;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .role-header:first-of-type { margin-top: 0; }
+
+    .role-label {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .role-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Chart rows */
+    .chart-area {
+      margin-top: 0.25rem;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 220px 1fr auto;
+      align-items: center;
+      gap: 0.75rem 1rem;
+      padding: 0.55rem 0.5rem;
+      border-radius: 3px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease both;
+      transition: background 0.15s;
+    }
+
+    .row:hover { background: var(--stripe); }
+
+    .row-label {
+      min-width: 0;
+    }
+
+    .course-name {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .semester-tag {
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .covid-badge {
+      background: var(--covid);
+      color: #fff;
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 0.1em 0.35em;
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+
+    /* Dumbbell bar */
+    .dumbbell-wrap {
+      position: relative;
+      height: 28px;
+      display: flex;
+      align-items: center;
+    }
+
+    .dumbbell-track {
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: var(--border);
+      border-radius: 1px;
+    }
+
+    .dumbbell-fill {
+      position: absolute;
+      height: 3px;
+      background: linear-gradient(90deg, var(--dept), var(--kyle));
+      border-radius: 2px;
+      transform-origin: left;
+      transition: transform 0.8s cubic-bezier(.22,1,.36,1);
+    }
+
+    .dot {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2.5px solid #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+      transform: translateX(-50%);
+      cursor: default;
+      transition: transform 0.2s;
+      z-index: 2;
+    }
+
+    .dot:hover { transform: translateX(-50%) scale(1.3); }
+    .dot.kyle  { background: var(--kyle); }
+    .dot.dept  { background: var(--dept); }
+
+    /* Tooltip */
+    .dot::after {
+      content: attr(data-tip);
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1A1714;
+      color: #FAFAF7;
+      font-size: 0.7rem;
+      font-family: 'DM Sans', sans-serif;
+      padding: 0.3em 0.6em;
+      border-radius: 3px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .dot:hover::after { opacity: 1; }
+
+    .gap-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--kyle);
+      white-space: nowrap;
+      min-width: 48px;
+      text-align: right;
+    }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1.6rem;
+      flex-wrap: wrap;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .legend-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .legend-dot.kyle { background: var(--kyle); }
+    .legend-dot.dept { background: var(--dept); }
+    .legend-dot.covid { background: var(--covid); border-radius: 2px; width: 18px; height: 10px; }
+
+    .footer-note {
+      margin-top: 1rem;
+      font-size: 0.68rem;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+
+  <div class="header">
+    <div>
+      <p class="eyebrow">Michigan State University · Fall 2017 – Spring 2022</p>
+      <h1>Teaching Evaluations — <em>Overall Score</em></h1>
+      <p class="scale-note">Combined overall rating · 5-point scale · Higher is better</p>
+    </div>
+    <div class="stat-block">
+      <div class="stat-value" id="avg-stat">—</div>
+      <div class="stat-label">My avg. score</div>
+    </div>
+  </div>
+
+  <div class="chart-area" id="chart"></div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot kyle"></div> My Score</div>
+    <div class="legend-item"><div class="legend-dot dept"></div> Dept. Average</div>
+    <div class="legend-item"><div class="legend-dot covid"></div> COVID-affected semester</div>
+  </div>
+
+  <p class="footer-note">
+    Scores represent combined overall evaluation ratings on a 1–5 scale. Unlike the University of Richmond data, MSU
+    departmental averages were not reported per question but as a single overall figure. Semesters marked
+    <strong>COVID</strong> coincide with remote or hybrid instruction during the pandemic.<br><br>
+    * The original MSU evaluation scale runs in the opposite direction (1 = best, 5 = worst). Scores here have been
+    inverted (displayed as 6 − original score) so that higher values consistently indicate stronger performance,
+    matching the intuitive presentation used throughout this page.<br><br>
+    * My individual scores are included within the departmental averages, as the data are not provided in a
+    disaggregated form that would allow for their removal.
+  </p>
+
+</div>
+
+<script>
+  const data = [
+    { sem: 'Fall 2017',   course: 'GEO 326 — Cartography',              role: 'Lab Instructor',       kyle: 4.85, dept: 4.40, covid: false },
+    { sem: 'Spring 2018', course: 'GEO 425 — Capstone for GIScience',   role: 'Lab Instructor',       kyle: 4.75, dept: 4.42, covid: false },
+    { sem: 'Fall 2018',   course: 'GEO 866 — Spatial Data Analysis',    role: 'Lab Instructor',       kyle: 4.81, dept: 4.33, covid: false },
+    { sem: 'Spring 2019', course: 'GEO 425 — Capstone for GIScience',   role: 'Lab Instructor',       kyle: 4.72, dept: 4.41, covid: false },
+    { sem: 'Fall 2019',   course: 'GEO 325 — Intermediate GIS',         role: 'Instructor of Record', kyle: 4.99, dept: 4.34, covid: false },
+    { sem: 'Spring 2020', course: 'GEO 113 — Intro to Econ. Geography', role: 'Instructor of Record', kyle: 4.75, dept: 4.38, covid: true  },
+    { sem: 'Fall 2020',   course: 'GEO 325 — Intermediate GIS',         role: 'Instructor of Record', kyle: 4.93, dept: 4.38, covid: true  },
+    { sem: 'Spring 2021', course: 'GEO 113 — Intro to Econ. Geography', role: 'Instructor of Record', kyle: 4.59, dept: 4.38, covid: true  },
+    { sem: 'Fall 2021',   course: 'GEO 215 — Sports Geography',         role: 'Instructor of Record', kyle: 4.88, dept: 4.38, covid: true  },
+    { sem: 'Spring 2022', course: 'GEO 425 — Capstone for GIScience',   role: 'Instructor of Record', kyle: 4.47, dept: 4.38, covid: true  },
+    { sem: 'Spring 2022', course: 'GEO 413 — Urban Geography',          role: 'Instructor of Record', kyle: 4.65, dept: 4.38, covid: true  },
+  ];
+
+  // Compute overall avg
+  const myAvg = (data.reduce((s,d)=>s+d.kyle,0)/data.length).toFixed(2);
+  document.getElementById('avg-stat').textContent = myAvg;
+
+  // Scale: map 4.0–5.0 to 0–100%
+  const MIN = 4.0, MAX = 5.0;
+  const pct = v => ((v - MIN) / (MAX - MIN)) * 100;
+
+  const chart = document.getElementById('chart');
+  let currentRole = null;
+  let rowIndex = 0;
+
+  data.forEach((d, i) => {
+    // Role divider
+    if (d.role !== currentRole) {
+      currentRole = d.role;
+      const rh = document.createElement('div');
+      rh.className = 'role-header';
+      rh.style.animationDelay = `${rowIndex * 0.06}s`;
+      rh.innerHTML = `<span class="role-label">${d.role}</span><div class="role-line"></div>`;
+      chart.appendChild(rh);
+      rowIndex++;
+    }
+
+    const kylePct = pct(d.kyle);
+    const deptPct = pct(d.dept);
+    const left  = Math.min(kylePct, deptPct);
+    const width = Math.abs(kylePct - deptPct);
+    const gap   = (d.kyle - d.dept).toFixed(2);
+
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.style.animationDelay = `${rowIndex * 0.07}s`;
+
+    row.innerHTML = `
+      <div class="row-label">
+        <div class="course-name" title="${d.course}">${d.course}</div>
+        <div class="semester-tag">
+          ${d.sem}
+          ${d.covid ? '<span class="covid-badge">COVID</span>' : ''}
+        </div>
+      </div>
+      <div class="dumbbell-wrap">
+        <div class="dumbbell-track"></div>
+        <div class="dumbbell-fill" style="left:${left}%; width:${width}%"></div>
+        <div class="dot dept" style="left:${deptPct}%" data-tip="Dept: ${d.dept.toFixed(2)}"></div>
+        <div class="dot kyle" style="left:${kylePct}%" data-tip="Mine: ${d.kyle.toFixed(2)}"></div>
+      </div>
+      <div class="gap-label">+${gap}</div>
+    `;
+
+    chart.appendChild(row);
+    rowIndex++;
+  });
+</script>
+</body>
+</html>
