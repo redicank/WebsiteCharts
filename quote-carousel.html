@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Voices</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --kyle:    #990000;
+      --bg:      #FAFAF7;
+      --surface: #FFFFFF;
+      --border:  #E8E4DC;
+      --text:    #1A1714;
+      --muted:   #7A7570;
+      --stripe:  #F5F3EF;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2.5rem 2.5rem 2rem;
+      max-width: 800px;
+      width: 100%;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.06);
+      animation: fadeUp 0.6s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--text);
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--kyle);
+    }
+
+    .stat-block {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--kyle);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.3rem;
+    }
+
+    /* Carousel */
+    .carousel-wrap {
+      position: relative;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .quote-stage {
+      position: relative;
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+    }
+
+    .quote-item {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      pointer-events: none;
+    }
+
+    .quote-item.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      position: relative;
+    }
+
+    .quote-mark {
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      line-height: 0.5;
+      color: var(--kyle);
+      opacity: 0.15;
+      margin-bottom: 0.5rem;
+      display: block;
+      user-select: none;
+    }
+
+    .quote-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.08rem;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 1.2rem;
+    }
+
+    .quote-attribution {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--kyle);
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1.8rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .arrow-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--muted);
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .arrow-btn:hover {
+      border-color: var(--kyle);
+      color: var(--kyle);
+      background: #99000008;
+    }
+
+    .arrow-btn svg { width: 16px; height: 16px; }
+
+    .dots-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      flex: 1;
+      padding: 0 1rem;
+      max-width: 600px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .dot.active {
+      background: var(--kyle);
+      transform: scale(1.4);
+    }
+
+    .counter {
+      font-size: 0.72rem;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Progress bar */
+    .progress-bar-wrap {
+      height: 2px;
+      background: var(--border);
+      border-radius: 1px;
+      margin-top: 1.2rem;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--kyle);
+      border-radius: 1px;
+      width: 0%;
+      transition: width linear;
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <div>
+      <p class="eyebrow">University of Richmond · Student Voices</p>
+      <h1>In Their Own <em>Words</em></h1>
+    </div>
+    <div class="stat-block">
+      <div class="stat-value" id="total-count">—</div>
+      <div class="stat-label">Student Comments</div>
+    </div>
+  </div>
+
+  <div class="carousel-wrap" id="carousel-wrap">
+    <div class="quote-stage" id="quote-stage"></div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progress-bar"></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="arrow-btn" id="prev-btn" aria-label="Previous quote">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+    <div class="dots-wrap" id="dots-wrap"></div>
+    <span class="counter" id="counter">1 / —</span>
+    <button class="arrow-btn" id="next-btn" aria-label="Next quote">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+const quotes = [
+  "For an introduction class, Dr. Redican did a great job at teaching basic concepts yet still keeping it challenging and interesting. The labs were very fun and informative and covered a wide variety of subjects rather than just a specific sector — some labs focused on personal information, some surrounding business, or some surrounding the environment and societal issues.",
+  "Professor Kyle is super sweet and down to earth, and makes the learning environment super fun. Working with GIS software can be very frustrating, but he finds ways to overcome it and not let students get discouraged.",
+  "The geography department would not be the same without Dr. Redican. He really fills a hole in the dept that is desperately needed. He brings a more modern approach to teaching in general that allows for deeper understanding of the subject through participation and class collaboration that is less formal and therefore easier to understand, ask questions, and collaborate as a whole class. I would recommend him to anyone with any level of experience, and he truly does make a huge effort to get to know his students and will do so much to help them and create a community. Would not be the same without him.",
+  "This course was great! I would recommend it to all undergraduate students. I think you can take GIS and apply it to so many topics outside of simple ecology and nature which many people think geography is. It is a way to analyze and present data that has to do with healthcare, business, infrastructure, and more. I did not anticipate how useful these programs would be to my interests, and I am really starting to enjoy this field of study.",
+  "I've never had a professor so willing and available outside of class time. He would message back in a minute via Slack or pop up at the SAL lab whenever I was having any difficulties. An absolute gem. He definitely shaped how communicative I would like to be with my professors moving forward.",
+  "My friends are actively pursuing his courses because GIS is so valuable, but even more so with a professor who is dedicated to guiding you in the right direction.",
+  "Kyle was great at being a professor and lab director. He was extremely helpful and never makes students feel bad for mistakes. He does a great job at making the classroom feel inclusive and safe. He doesn't say that he is trying to do this, but conveys his values in his actions. His feedback was really good — always very detailed and never ambiguous with what he wants.",
+  "Kyle Redican is an amazing professor who makes every class fun and interactive. He truly cares about his students and wants them to succeed and flourish. He is available to meet and will explain concepts to you until you understand. I was nervous coming into the class as I am not a technical person, but Kyle really walked me through a lot of things and I'm leaving feeling much more confident.",
+  "GEOG 260 is an excellent introductory course for students who are interested in learning more about spatial analysis. Dr. Redican is an excellent instructor, and the assignments are explicitly designed for students to apply what they've learned. One of the most interesting labs had us creating data for the Amazon Borderlands Spatial Analysis Team — unlike other projects, the data will be used in University of Richmond research, which brings more meaning to the work.",
+  "Dr. Redican is my favorite professor that I have had at this institution, or ever. He is extremely informative, engaging, and provides us with skills that are very valuable in the real world with respect to ArcGIS and data science. I feel like this class has prepared me the most for a career using this software.",
+  "This course is great. Dr. Redican does a great job of diversifying examples and class topics so the labs touch on the various applications of GIS professionally — health, ecology, urban planning, natural disasters, and politics — which made the class very interdisciplinary. This advanced course expanded in a way that wasn't just teaching how to make prettier maps, but truly diving into different analyses and methods.",
+  "Dr. Redican is the best teacher I have had at UR hands down. He is so understanding and really connects with his students. He takes a course which is very advanced and filled with technically complex pieces and makes it fun and easy to understand. He made class time useful in teaching us but also kept it entertaining. 10/10 Professor.",
+  "Dr. Redican is the best. There is no one better suited to teach this class. He is knowledgeable and relatable. He's a student favorite for a good reason. Kyle is super smart, but he makes the subject fun enough to engage students and make them more interested in the topic. He makes the class very student-oriented — resume and career development, class inside jokes on exams, and making an effort to get to know students' interests.",
+  "While the labs may be difficult for students without a computer science background, Dr. Redican ensures that they are given the tools necessary to succeed. This course provides students with valuable experience in the ArcGIS Pro system which is a very desirable trait to certain job employers.",
+  "Everyone loves Kyle — students talk about him in every department. He is enthusiastic about GIS and consistent with class style, which is super helpful. You can tell he cares what happens to his students even after they finish his class. I have a specific example of Kyle being an inclusive instructor: in class he was reading something that said 'a career prep program for girls,' and as he was reading it he paused and changed his wording to say 'a career prep program for young women,' which I thought was really respectful and a small intentional thing that helps create an inclusive environment.",
+  "This course greatly improved my knowledge of the subject in preparing me for advanced spatial analysis. Practical information was learned in overlap with microeconomics and psychology. This class is a great one to take for the data science minor.",
+  "Dr. Redican is an excellent professor who is very accessible outside of class to help out with challenging lab assignments. He puts lots of effort into engaging and helping students learn, which means a lot to students and is something other professors at Richmond don't do.",
+  "Kyle is one of the most helpful professors I've ever had both in and outside of class, super knowledgeable about the subject, and understanding about what it means to be a student. Kyle treats his students like humans first, and in doing so creates a supportive and productive learning environment. I feel more knowledgeable, closer to my classmates, and more confident in my abilities as a result of Kyle's teaching methods.",
+  "Dr. Redican is a great professor. He is fun while also very knowledgeable about the subject matter. He understands that GIS software is complicated and gives students ample room for error when learning the ropes. He is very reasonable with regards to work and deadlines and simply wants to spread the love of geography and data representation with his students.",
+  "Fantastic course. Found a really good balance between the theory and basics of geography, and learning the hard skills and software to actually apply that theory and make it tangible. Would absolutely recommend — not as a soft course, but as a really valuable one.",
+  "Kyle is super receptive, super flexible where beneficial, and just creates a good environment. The balance between lecture and practice through labs and activities was accomplished really successfully. He's always helpful and accessible, and very impressed — made the class a really positive experience that makes me wish I was majoring in Geography.",
+  "This class is more interesting than I had ever thought was possible. I don't care about or enjoy anything in terms of computers, but this class made me enjoy this side of data analysis. I think it is a good general education course and will benefit me throughout the rest of my college career.",
+  "Kyle is a great, caring professor who is always willing to help you through difficulties or concerns. I have not yet met a professor with this level of commitment to his students. I hope to take a class with him again in the future.",
+  "Dr. Redican is one of the best professors I've had at this school. He makes sure to meet you at your learning point and explain concepts without diminishing your intellect even if questions feel basic. He ensures you can get the most out of the class.",
+  "Dr. Redican fostered an amazing environment to work and learn in. His lectures were always enjoyable, and he was always very helpful and receptive to any questions. He was very kind, funny, and understanding throughout the semester.",
+  "Professor Redican is one of the best and most in-touch professors at UR. His humor and engaging teaching style make learning GIS an enjoyable experience. He excels at guiding students through increasingly complex tasks by continuously building on previously-learned material, ensuring students have a solid understanding before moving on.",
+  "Dr. Redican is a fantastic teacher who really cares about what he does. The labs build on each other and he's very receptive to questions. He also listens to student feedback and implements it, even modifying lessons to make sure we understand the content better. His teaching made me feel prepared to do the work and unafraid to ask questions.",
+  "Kyle is a very knowledgeable and understanding professor. He effectively guided lectures, was organized in outlining our course, made clear what to expect on exams, and provided a comprehensive study guide. He also gave very detailed instructions for each lab. He is also very understanding and knows that life happens, so is very gracious about extensions.",
+  "Dr. Kyle Redican is very responsive and productive when asking him for help — he provides meaningful feedback and makes sure that you understand the content. He always came to class prepared and never went over time. I also appreciate how understanding he is and his dry sense of humor. Overall, he is one of my favorite professors due to how reliable he is.",
+  "Dr. Redican is super clear on his grading expectations, which is something I appreciate. With the creative nature of the course, he left us ample room to try out new things and be creative while still being transparent about what he was expecting to evaluate us on.",
+  "Dr. Redican is a great and very approachable teacher. I always feel comfortable reaching out or raising my hand to ask a question, no matter how small. He is also very flexible with different learning styles. I have developed a greater interest in this material after taking his class.",
+  "Had a feedback survey midway through the year and immediately implemented changes to address concerns, which streamlined class and made following along on lab days far more convenient. Dr. Redican is always actively seeking out feedback to improve his class and responded to messages quickly and with lots of detail.",
+  "He was a great professor. Very helpful outside of class, gave great and extensive feedback to help improve future products, made sure everything related to the course, and also had a fair grading system that allowed students to excel.",
+  "I enjoyed this course as it challenged how I thought about data and mapping. It was fun and engaging, and there are many things within this course that I will take with me in research and other academic endeavors.",
+  "Prioritizes students and creates a welcoming class environment that is approachable but challenges us to consider new perspectives on the world. Creates assignments that demonstrate the applicability of GIS across a variety of disciplines.",
+  "Dr. Redican was one of my favorite teachers I've had at UR as a senior. His enthusiasm for the subject and department was obvious; he spent much more time and effort than many would trying to connect students to cool work and research opportunities. He is always available for help, extremely understanding and flexible, and caring for his students beyond the content of the course.",
+  "I enjoyed taking this course. It had been a while since I took a GIS class but with Kyle's help I fell right back into things. Kyle's superpower is giving us clear directives to follow for each lab. He turns what could be very time-consuming assignments into something more manageable. In Kyle's class it always feels fun.",
+  "I truly think Kyle is the best professor I have ever had at Richmond. He is enthusiastic and makes an effort to connect with each of his students. I have found with other geography professors it often feels like I have to teach myself the content. I learn so much from Kyle and he has truly become one of my role models. He is always available for help and puts emphasis on helping us apply for jobs in the real world. I have learned more from Kyle in a semester than a year from some other classes.",
+  "I am a huge fan of Dr. Redican. In my opinion, he's kind of the backbone of the Geography department. Something I especially appreciated as a Senior was Kyle's focus on helping us prepare for the job market. He gave me line-by-line edits on my resume and multiple cover letters. He helped me look for opportunities and was generally super encouraging throughout the whole process. Him and Beth even helped me mock-interview answering technical questions. I am super grateful to have been his student.",
+  "Dr. Kyle Redican has always been a fan favorite among students. He is clearly knowledgeable about the GIS field and goes above and beyond to make sure all his students are able to keep from falling behind in class. He prepares everyone to take the exams and learn from them.",
+  "Dr. Redican has been the only professor throughout my four years who has ever believed in me and expressed that to me, which made doing work feel rewarding because I knew he was expecting me to do well. It was nice, especially since I am not a geography major.",
+  "Dr. Redican is always very receptive to questions and explains the content very well considering how technical it can be. He provides a lot of good examples to help us connect course content to relevant world applications. His expectations are very clear, and he is overall very understanding. It's clear he really values his students and wants them to succeed — he has helped me perfect my skills needed to gain internship experience.",
+  "Kyle remains my favorite professor at Richmond. He is so supportive of his students and doesn't make you feel stupid if you don't understand something. He is always available to meet to help, and loves to go above and beyond for his students. He just actually makes me like learning, and I'm always excited to come to his class, no matter how bad of a day I'm having.",
+  "I've had Professor Redican for 2 classes so far at Richmond. I can say without a doubt that he is one of the most receptive teachers at UR. He was almost always available, sitting in on students working in the Spatial Analysis Lab, fielding questions, and meeting with aspiring geography majors and minors. I'm taking another one of his classes next semester and I'm looking forward to it.",
+  "I love Kyle so much that I have now taken two of his classes and I'm not even a Geography or ES major or minor. This class didn't count towards my graduation at all and it was still my favorite class because of how awesome Kyle is. He's kind, funny, smart, and just wants everyone to have fun and make good maps.",
+  "A thoroughly experienced professor who knows the ins and outs of the most specific areas of the field. He is too humble sometimes and always helpful and treats everyone as an adult.",
+  "This class was the perfect balance of practicality and theory. I enjoyed learning how to use ArcGIS Pro and I believe it is a tool I will use for the rest of my life. Dr. Redican's passion for the subject and approachable nature definitely affected my attitude towards the class.",
+  "GEOG 260 was a great class that taught me many new things that I will continue to carry with me throughout my time at UR. Even though this is a geography class, I feel as if it's applicable to a wide variety of subjects, which is one of the reasons I'm glad I took it.",
+  "One of the most amazing professors I have had. I learned so much and he was always very willing to help and be flexible if I needed it. When we suggested things in the midterm course evaluation, he actually implemented the changes we asked for. Almost no professors do that.",
+  "Kyle was extremely helpful, engaging, and understanding. He always came prepared and really cares about his students. I was able to learn at my own pace and Kyle was receptive to any questions. Kyle was a great professor and receives an 11/10!",
+  "Kyle cares so much about the topic he teaches while also caring about the lives of his students. He is very understanding and patient, and always willing to answer questions. Being in his class was awesome and I learned so much.",
+  "His lectures were detailed and to the point without being overwhelming. He was understanding both with deadlines and with our problems. Dr. Redican was also available during class and outside of class to help with any issues. Grading on assignments and exams was fair.",
+  "Dr. Kyle Redican is a great professor! I learned so much more about GIS and its applications. He encouraged me to reach for new knowledge, even beyond the scope of classes. He is also very funny and chill. I enjoyed his lectures a lot.",
+  "Dr. Redican always gave clear feedback for your work and is readily available through email and office hours to address questions. He is also very effective and detailed when it comes to addressing content and additional questions. He always went above and beyond in helping me complete projects.",
+  "Although I wasn't fighting for my life trying to get a good grade, I think I learn way better without that pressure and feel more motivated to actually focus on learning the topic. All of the labs required some sort of critical thinking and I learned something new every week that I think will be useful for a future career.",
+  "Kyle was super good about helping outside of class if needed. There were a few times I needed help on a lab and Kyle always responded super fast and with really helpful information. There was also a class Slack channel so we could get even faster responses if needed.",
+  "Kyle is probably the best professor I have had at Richmond. He is so obviously passionate and knowledgeable about the course content which makes class enjoyable. You can tell that he wants to help students succeed. He makes this difficult topic extremely approachable and fun. He is super helpful with getting students connected with opportunities within geography. I could not think of a better person to teach the GIS courses offered at Richmond.",
+  "Dr. Redican is an amazing professor. He exhibits a clear passion for his teaching and continually displays concern and care for students. Out of all my professors, he is one of the best that I have had, not only for his clear knowledge of the subject but for his teaching methods.",
+  "Dr. Redican is not only very knowledgeable but very helpful in navigating students facing difficulties with course content. Due to working to help pay for my education, my access to the computer lab was limited. Together, we were able to work out a plan to still help me complete the necessary coursework and keep up with class. Because of his teaching I've decided to pursue a minor in data science and to pursue GIS more in the future.",
+  "Kyle is super knowledgeable in his field which is honestly very cool. The slides he uploads are very helpful and so are his review sessions. The labs help with some confusion as it is more hands on. When he grades the labs he is very clear about why he deducted points and his comments also allow me to have a better grasp on the material."
+];
+
+  const INTERVAL = 6000;
+  let current = 0;
+  let timer = null;
+  let paused = false;
+  let progressStart = null;
+  let progressRaf = null;
+
+  const stage = document.getElementById('quote-stage');
+  const dotsWrap = document.getElementById('dots-wrap');
+  const counter = document.getElementById('counter');
+  const progressBar = document.getElementById('progress-bar');
+  const carouselWrap = document.getElementById('carousel-wrap');
+
+  document.getElementById('total-count').textContent = quotes.length;
+
+  // Build quote items
+  quotes.forEach((q, i) => {
+    const el = document.createElement('div');
+    el.className = 'quote-item' + (i === 0 ? ' active' : '');
+    el.innerHTML = `
+      <span class="quote-mark">&ldquo;</span>
+      <p class="quote-text">${q}</p>
+      <p class="quote-attribution">Student, University of Richmond</p>
+    `;
+    stage.appendChild(el);
+  });
+
+  // Build dots
+  quotes.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(d);
+  });
+
+  function getItems() { return stage.querySelectorAll('.quote-item'); }
+  function getDots()  { return dotsWrap.querySelectorAll('.dot'); }
+
+  function goTo(idx) {
+    const items = getItems();
+    const dots  = getDots();
+    items[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (idx + quotes.length) % quotes.length;
+    items[current].classList.add('active');
+    dots[current].classList.add('active');
+    counter.textContent = `${current + 1} / ${quotes.length}`;
+    resetProgress();
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  document.getElementById('next-btn').addEventListener('click', () => { next(); });
+  document.getElementById('prev-btn').addEventListener('click', () => { prev(); });
+
+  // Progress bar animation
+  function resetProgress() {
+    cancelAnimationFrame(progressRaf);
+    progressBar.style.transition = 'none';
+    progressBar.style.width = '0%';
+    if (!paused) startProgress();
+  }
+
+  function startProgress() {
+    progressBar.style.transition = 'none';
+    progressBar.style.width = '0%';
+    // Force reflow
+    progressBar.getBoundingClientRect();
+    progressBar.style.transition = `width ${INTERVAL}ms linear`;
+    progressBar.style.width = '100%';
+    clearTimeout(timer);
+    timer = setTimeout(next, INTERVAL);
+  }
+
+  function pauseProgress() {
+    paused = true;
+    clearTimeout(timer);
+    // Capture current width and freeze
+    const computed = getComputedStyle(progressBar).width;
+    const parentWidth = progressBar.parentElement.offsetWidth;
+    const pct = (parseFloat(computed) / parentWidth * 100).toFixed(2);
+    progressBar.style.transition = 'none';
+    progressBar.style.width = pct + '%';
+  }
+
+  function resumeProgress() {
+    paused = false;
+    const current_pct = parseFloat(progressBar.style.width) || 0;
+    const remaining = INTERVAL * (1 - current_pct / 100);
+    progressBar.style.transition = `width ${remaining}ms linear`;
+    progressBar.style.width = '100%';
+    timer = setTimeout(next, remaining);
+  }
+
+  carouselWrap.addEventListener('mouseenter', pauseProgress);
+  carouselWrap.addEventListener('mouseleave', resumeProgress);
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') next();
+    if (e.key === 'ArrowLeft')  prev();
+  });
+
+  // Init
+  counter.textContent = `1 / ${quotes.length}`;
+  startProgress();
+</script>
+</body>
+</html>
