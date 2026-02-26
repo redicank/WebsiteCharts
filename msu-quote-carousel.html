@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MSU Student Voices</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --kyle:    #18453B;   /* MSU green */
+      --bg:      #FAFAF7;
+      --surface: #FFFFFF;
+      --border:  #E8E4DC;
+      --text:    #1A1714;
+      --muted:   #7A7570;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2.5rem 2.5rem 2rem;
+      max-width: 800px;
+      width: 100%;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.06);
+      animation: fadeUp 0.6s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--text);
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--kyle);
+    }
+
+    .stat-block {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--kyle);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.3rem;
+    }
+
+    .carousel-wrap {
+      position: relative;
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .quote-stage {
+      position: relative;
+      min-height: 200px;
+      display: flex;
+      align-items: center;
+    }
+
+    .quote-item {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      pointer-events: none;
+    }
+
+    .quote-item.active {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      position: relative;
+    }
+
+    .quote-mark {
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      line-height: 0.5;
+      color: var(--kyle);
+      opacity: 0.15;
+      margin-bottom: 0.5rem;
+      display: block;
+      user-select: none;
+    }
+
+    .quote-text {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.08rem;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 1.2rem;
+    }
+
+    .quote-attribution {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .attr-course {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--kyle);
+      background: #18453B12;
+      padding: 0.2em 0.6em;
+      border-radius: 2px;
+    }
+
+    .attr-school {
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1.8rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .arrow-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--muted);
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      flex-shrink: 0;
+    }
+
+    .arrow-btn:hover {
+      border-color: var(--kyle);
+      color: var(--kyle);
+      background: #18453B08;
+    }
+
+    .arrow-btn svg { width: 16px; height: 16px; }
+
+    .dots-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      flex: 1;
+      padding: 0 1rem;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .dot.active {
+      background: var(--kyle);
+      transform: scale(1.4);
+    }
+
+    .counter {
+      font-size: 0.72rem;
+      color: var(--muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .progress-bar-wrap {
+      height: 2px;
+      background: var(--border);
+      border-radius: 1px;
+      margin-top: 1.2rem;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--kyle);
+      border-radius: 1px;
+      width: 0%;
+      transition: width linear;
+    }
+
+    /* Course filter pills */
+    .filter-wrap {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-pill {
+      font-size: 0.67rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 0.3em 0.75em;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .filter-pill:hover {
+      border-color: var(--kyle);
+      color: var(--kyle);
+    }
+
+    .filter-pill.active {
+      background: var(--kyle);
+      border-color: var(--kyle);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <div>
+      <p class="eyebrow">Michigan State University · Student Voices</p>
+      <h1>In Their Own <em>Words</em></h1>
+    </div>
+    <div class="stat-block">
+      <div class="stat-value" id="total-count">—</div>
+      <div class="stat-label">Student Comments</div>
+    </div>
+  </div>
+
+  <div class="filter-wrap" id="filter-wrap"></div>
+
+  <div class="carousel-wrap" id="carousel-wrap">
+    <div class="quote-stage" id="quote-stage"></div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progress-bar"></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="arrow-btn" id="prev-btn" aria-label="Previous quote">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="dots-wrap" id="dots-wrap"></div>
+    <span class="counter" id="counter">1 / —</span>
+    <button class="arrow-btn" id="next-btn" aria-label="Next quote">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+const allQuotes = [
+  { course: "GEO 325: Intermediate GIS", text: "This class was SO much work and time but it was easily my favorite class. I couldn't imagine leaving this class not having done any of these labs and they all served their purpose for the experience. My least favorite part of this class was honestly that it made me judge other classes more harshly experience wise." },
+  { course: "GEO 325: Intermediate GIS", text: "Joey's and Kyle's enthusiasm for the material, and excitement to come to each class to teach and always be of help — some of the best instructors I have had in my two and a half years here at MSU. I wish I had been a better student." },
+  { course: "GEO 325: Intermediate GIS", text: "I am taking so much experience and knowledge with me from this class. The labs were amazing — made to be easily understood and to actually explain what we are doing and why we are using specific tools. It really helps with the learning process and I wish it was the same in my other classes. You guys did awesome setting us up for success. That's how it should be." },
+  { course: "GEO 325: Intermediate GIS", text: "I believe that my GIS skills have increased tremendously due to this class. Kyle was an engaging and effective instructor who was always willing to work with students. The structure of the class was well done and I always felt supported." },
+  { course: "GEO 325: Intermediate GIS", text: "Kyle was one of the best professors I've had in my college career. His enthusiasm really made an impact on me and made me want to do my very best in this class. He is very effective with his teaching style and easy to learn from. His personality really brought our class together. MSU GEO dept. is very lucky to have Kyle." },
+  { course: "GEO 325: Intermediate GIS", text: "Amazing class — Kyle and Ken's GEO 325 class has been my favorite class of all the classes I have taken at MSU." },
+  { course: "GEO 425: GIS Capstone", text: "The lab session was perfect because I could practice all the information from class. The instructor was always available to help whenever I needed assistance. He was very flexible and friendly. Overall he did an excellent job." },
+  { course: "GEO 425: GIS Capstone", text: "Excellent TA! Smart, approachable, and extremely helpful! I am very grateful for having Kyle as my TA. He surely helped navigate the overall learning experience more smoothly." },
+  { course: "GEO 425: GIS Capstone", text: "Kyle was great! Enough said. *mic drop*" },
+  { course: "GEO 425: GIS Capstone", text: "The instructor was very helpful and went out of his way to provide support and further explain concepts, as well as solve technical problems with the technology and course material. He made sure each student received assistance when needed and linked the labs to the lecture material successfully." },
+  { course: "GEO 425: GIS Capstone", text: "Very helpful with labs. Instructor did outstanding work." },
+  { course: "GEO 413: Urban Geography", text: "Kyle is an amazing instructor. Super easy going and easy to learn from." },
+  { course: "GEO 413: Urban Geography", text: "Most caring and engaging professor over my time at MSU. Explained everything extremely well and was easy to understand. Thanks Kyle." },
+  { course: "GEO 215: Sports Geography", text: "By far the best professor I've had since I have been in college and one of my favorite teachers of all time. Great guy that really cares about his students." },
+  { course: "GEO 215: Sports Geography", text: "Best class I had this semester — really enjoyed Kyle as my professor. I think he did a great job making class fun and enjoyable to come to." },
+  { course: "GEO 215: Sports Geography", text: "Kyle was a really good teacher for this course. Although he is not an expert in sports geography, he did plenty of research for the lectures and was able to answer questions on the material when asked. The lectures included polls and jokes that kept the class engaged. I felt confident on exams due to the content being pulled straight from the lectures and the very helpful study guides. Overall a very fun and engaging class." },
+  { course: "GEO 215: Sports Geography", text: "Dr. Redican was an amazing teacher that made each class interesting. He really cared about what he was teaching and it showed." },
+  { course: "GEO 215: Sports Geography", text: "Great teacher, actually listens to the students and actively helps them prepare for exams. Class is never boring either." },
+  { course: "GEO 215: Sports Geography", text: "Kyle was hands down the best professor I've had so far at MSU." },
+  { course: "GEO 215: Sports Geography", text: "Prof Redican was the best professor I have had this semester. He taught me a lot and clearly cared about all of the students in his class. I hope there can be more professors like him in the future." },
+  { course: "GEO 326: Cartographic Design", text: "Always helpful and encouraging whenever a student asked for help. Always explained all the course material well and gave useful tips for students." },
+  { course: "GEO 326: Cartographic Design", text: "Kyle was very helpful in lab — best lab instructor I've had for a GEO class." },
+  { course: "GEO 326: Cartographic Design", text: "Cool guy, good instructor. Could relate and explain things in ways I could connect to." },
+  { course: "GEO 113: Intro to Econ. Geography", text: "I wish I could take another class with Kyle. He is the best and most supportive instructor I have learned under so far in my college time. I suffered with Covid-19 and had a lot of struggles throughout the semester but not once had a problem in the course — Kyle supported me through all of it. He is always available for communication, never replies late, and his ways of teaching keep the class engaged. I will 100% recommend anybody to take his course." },
+  { course: "GEO 113: Intro to Econ. Geography", text: "He was an overall great professor that was very engaging in the class. He does some of the best improvements of a class I have seen since the lockdown — changing it to be less tedious and more enjoyable. Was a truly enjoyable class to take." },
+  { course: "GEO 113: Intro to Econ. Geography", text: "Love this style of teaching. Very engaging and shows he cares about the students. Thank you." },
+  { course: "GEO 113: Intro to Econ. Geography", text: "Kyle made the content in this class a pleasure to learn about. If he had a YouTube channel and posted his lectures I would watch them in my free time. 10 out of 10, would take again." },
+  { course: "GEO 113: Intro to Econ. Geography", text: "I really enjoyed this class. Professor Redican made the classes very engaging and created a very open classroom environment to talk and discuss. Overall great class." },
+  { course: "GEO 113: Intro to Econ. Geography", text: "It was a fun and very informative class. The professor was very qualified, making sure it was clear for everyone — even for people without any background in economics like myself." },
+  { course: "GEO 113: Intro to Econ. Geography", text: "Kyle Redican was a really wonderful instructor. You can tell he cares about the material he is presenting and that he cares about taking a good approach with everyone in the class." },
+  { course: "GEO 113: Intro to Econ. Geography", text: "I really liked Kyle's lectures. Usually when I take an attendance-optional lecture-based class I tend to skip a few times a week, but he always made things interesting and made it worth my time to go. He was engaging with the class and I could tell he really cared about making sure we understood the content." },
+  { course: "GEO 113: Intro to Econ. Geography", text: "Kyle was great. Always available for questions outside of class. Really engaged conversation through a large classroom. Would take another course with him if possible." },
+  { course: "GEO 113: Intro to Econ. Geography", text: "My favorite class I've taken at MSU so far!" },
+];
+
+  const INTERVAL = 6000;
+  let activeFilter = 'All';
+  let filtered = [...allQuotes];
+  let current = 0;
+  let timer = null;
+  let paused = false;
+
+  // Unique courses in order
+  const courses = ['All', ...([...new Set(allQuotes.map(q => q.course))])];
+
+  const stage      = document.getElementById('quote-stage');
+  const dotsWrap   = document.getElementById('dots-wrap');
+  const counter    = document.getElementById('counter');
+  const progressBar= document.getElementById('progress-bar');
+  const carouselWrap = document.getElementById('carousel-wrap');
+  const filterWrap = document.getElementById('filter-wrap');
+  const totalCount = document.getElementById('total-count');
+
+  totalCount.textContent = allQuotes.length;
+
+  // Build filter pills
+  courses.forEach(c => {
+    const pill = document.createElement('button');
+    pill.className = 'filter-pill' + (c === 'All' ? ' active' : '');
+    pill.textContent = c === 'All' ? `All (${allQuotes.length})` : c;
+    pill.addEventListener('click', () => {
+      activeFilter = c;
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      filtered = c === 'All' ? [...allQuotes] : allQuotes.filter(q => q.course === c);
+      current = 0;
+      renderQuotes();
+      resetProgress();
+    });
+    filterWrap.appendChild(pill);
+  });
+
+  function renderQuotes() {
+    stage.innerHTML = '';
+    dotsWrap.innerHTML = '';
+
+    filtered.forEach((q, i) => {
+      const el = document.createElement('div');
+      el.className = 'quote-item' + (i === 0 ? ' active' : '');
+      el.innerHTML = `
+        <span class="quote-mark">&ldquo;</span>
+        <p class="quote-text">${q.text}</p>
+        <div class="quote-attribution">
+          <span class="attr-course">${q.course}</span>
+          <span class="attr-school">Michigan State University</span>
+        </div>
+      `;
+      stage.appendChild(el);
+
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      d.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(d);
+    });
+
+    counter.textContent = `1 / ${filtered.length}`;
+  }
+
+  function goTo(idx) {
+    const items = stage.querySelectorAll('.quote-item');
+    const dots  = dotsWrap.querySelectorAll('.dot');
+    if (!items.length) return;
+    items[current]?.classList.remove('active');
+    dots[current]?.classList.remove('active');
+    current = (idx + filtered.length) % filtered.length;
+    items[current]?.classList.add('active');
+    dots[current]?.classList.add('active');
+    counter.textContent = `${current + 1} / ${filtered.length}`;
+    resetProgress();
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  document.getElementById('next-btn').addEventListener('click', next);
+  document.getElementById('prev-btn').addEventListener('click', prev);
+
+  function resetProgress() {
+    clearTimeout(timer);
+    progressBar.style.transition = 'none';
+    progressBar.style.width = '0%';
+    progressBar.getBoundingClientRect();
+    if (!paused) startProgress();
+  }
+
+  function startProgress() {
+    progressBar.style.transition = `width ${INTERVAL}ms linear`;
+    progressBar.style.width = '100%';
+    timer = setTimeout(next, INTERVAL);
+  }
+
+  function pauseProgress() {
+    paused = true;
+    clearTimeout(timer);
+    const computed = getComputedStyle(progressBar).width;
+    const parentWidth = progressBar.parentElement.offsetWidth;
+    const pct = (parseFloat(computed) / parentWidth * 100).toFixed(2);
+    progressBar.style.transition = 'none';
+    progressBar.style.width = pct + '%';
+  }
+
+  function resumeProgress() {
+    paused = false;
+    const pct = parseFloat(progressBar.style.width) || 0;
+    const remaining = INTERVAL * (1 - pct / 100);
+    progressBar.style.transition = `width ${remaining}ms linear`;
+    progressBar.style.width = '100%';
+    timer = setTimeout(next, remaining);
+  }
+
+  carouselWrap.addEventListener('mouseenter', pauseProgress);
+  carouselWrap.addEventListener('mouseleave', resumeProgress);
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') next();
+    if (e.key === 'ArrowLeft')  prev();
+  });
+
+  // Init
+  renderQuotes();
+  startProgress();
+</script>
+</body>
+</html>
