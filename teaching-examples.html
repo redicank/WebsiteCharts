@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Teaching Examples – Kyle Redican</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ur:        #990000;
+      --ur-mid:    #c0392b;
+      --ur-light:  #99000010;
+      --bg:        #FAFAF7;
+      --surface:   #FFFFFF;
+      --border:    #E8E4DC;
+      --text:      #1A1714;
+      --muted:     #7A7570;
+      --accent:    #2C3E50;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      padding: 2rem;
+    }
+
+    .page-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Page Header ── */
+    .page-header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 1.25rem;
+    }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .page-header p {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 680px;
+      line-height: 1.6;
+    }
+
+    /* ── Section Labels ── */
+    .section-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ur);
+      margin-bottom: 0.75rem;
+    }
+
+    /* ══════════════════════════════
+       CARTOGRAPHY CAPSTONE SPOTLIGHT
+    ══════════════════════════════ */
+    .spotlight {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--ur);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+    }
+
+    .spotlight-header {
+      padding: 2rem 2rem 1.5rem;
+      background: linear-gradient(135deg, #fdf8f8 0%, #fff 100%);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .spotlight-tag {
+      display: inline-block;
+      background: var(--ur);
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      border-radius: 2px;
+      margin-bottom: 0.9rem;
+    }
+
+    .spotlight-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.25;
+    }
+
+    .spotlight-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .meta-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .meta-chip .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--ur);
+      flex-shrink: 0;
+    }
+
+    /* Photos row */
+    .photos-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .photos-row img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photos-row img:first-child {
+      border-right: 1px solid var(--border);
+    }
+
+    /* Body */
+    .spotlight-body {
+      padding: 1.75rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .spotlight-desc p {
+      font-size: 0.93rem;
+      line-height: 1.75;
+      color: var(--text);
+    }
+
+    .spotlight-desc p + p {
+      margin-top: 0.9rem;
+    }
+
+    /* How It Works steps */
+    .how-it-works h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.9rem;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+    }
+
+    .step-num {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: var(--ur);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-text {
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    /* Map gallery */
+    .gallery-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .gallery-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .gallery-group-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .gallery-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .gallery-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .gallery-grid-4 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      background: #f5f5f5;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-grid-2 .gallery-item img { height: 180px; object-fit: cover; }
+    .gallery-grid-3 .gallery-item img { height: 130px; object-fit: cover; }
+    .gallery-grid-4 .gallery-item img { height: 110px; object-fit: cover; }
+
+    .gallery-item:hover img { transform: scale(1.03); }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.72));
+      color: #fff;
+      padding: 1rem 0.6rem 0.5rem;
+      font-size: 0.67rem;
+      line-height: 1.3;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .gallery-item:hover .gallery-caption { opacity: 1; }
+
+    /* Quotes */
+    .quotes-section {
+      background: var(--ur-light);
+      border-left: 3px solid var(--ur);
+      border-radius: 0 3px 3px 0;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .quotes-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--ur);
+      margin-bottom: 0.25rem;
+      letter-spacing: 0.03em;
+    }
+
+    blockquote {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: var(--text);
+      font-style: italic;
+      position: relative;
+      padding-left: 1.1rem;
+    }
+
+    blockquote::before {
+      content: '\201C';
+      position: absolute;
+      left: -0.1rem;
+      top: -0.15rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--ur);
+      line-height: 1;
+      opacity: 0.5;
+    }
+
+    .quote-source {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-style: normal;
+      margin-top: 0.35rem;
+      display: block;
+    }
+
+    /* ══════════════════════════════
+       LABS GRID
+    ══════════════════════════════ */
+    .labs-section { display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .lab-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .lab-card:hover {
+      box-shadow: 0 3px 18px rgba(0,0,0,0.09);
+      border-color: #d4cfc6;
+    }
+
+    .lab-card-header {
+      display: flex;
+      align-items: stretch;
+      cursor: pointer;
+    }
+
+    .lab-accent {
+      width: 4px;
+      background: var(--ur);
+      flex-shrink: 0;
+    }
+
+    .lab-title-block {
+      flex: 1;
+      padding: 0.9rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .lab-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .lab-chips {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .chip {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    .chip-course {
+      background: var(--ur-light);
+      color: var(--ur);
+      border: 1px solid rgba(153,0,0,0.2);
+    }
+
+    .chip-software {
+      background: #f0f0ed;
+      color: #555;
+      border: 1px solid #ddd;
+    }
+
+    .expand-toggle {
+      padding: 0.9rem 1rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s;
+      user-select: none;
+    }
+
+    .lab-card-header:hover .expand-toggle { color: var(--ur); }
+
+    .expand-icon {
+      transition: transform 0.25s ease;
+    }
+
+    .lab-body {
+      display: none;
+      padding: 0.75rem 1.25rem 1rem 1.75rem;
+      border-top: 1px solid var(--border);
+      background: #fdfcfb;
+    }
+
+    .lab-body.open { display: block; }
+
+    .lab-purpose {
+      font-size: 0.87rem;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .lab-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--ur);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(153,0,0,0.3);
+      transition: border-color 0.2s, opacity 0.2s;
+    }
+
+    .lab-link:hover { opacity: 0.75; border-color: var(--ur); }
+
+    /* ══════════════════════════════
+       SYLLABI SECTION
+    ══════════════════════════════ */
+    .syllabi-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+    }
+
+    .syllabi-header {
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .syllabi-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 500;
+    }
+
+    .syllabi-groups {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .syllabi-group {
+      padding: 1.1rem 1.5rem;
+    }
+
+    .syllabi-group:first-child {
+      border-right: 1px solid var(--border);
+    }
+
+    .syllabi-group-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .syllabi-group.ur-group .syllabi-group-label { color: var(--ur); }
+    .syllabi-group.msu-group .syllabi-group-label { color: #18453B; }
+
+    .syllabus-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .syllabus-list li a {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      font-size: 0.84rem;
+      color: var(--text);
+      text-decoration: none;
+      line-height: 1.4;
+      padding: 0.3rem 0;
+      transition: color 0.2s;
+    }
+
+    .syllabus-list li a:hover { color: var(--ur); }
+
+    .syllabus-list li a .arrow {
+      font-size: 0.75rem;
+      margin-top: 0.1rem;
+      flex-shrink: 0;
+      opacity: 0.4;
+    }
+
+    /* Lightbox */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      cursor: zoom-out;
+    }
+
+    .lightbox-overlay.active { display: flex; }
+
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 88vh;
+      object-fit: contain;
+      border-radius: 3px;
+      box-shadow: 0 8px 60px rgba(0,0,0,0.5);
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 1.25rem; right: 1.5rem;
+      color: #fff;
+      font-size: 1.75rem;
+      cursor: pointer;
+      opacity: 0.7;
+      line-height: 1;
+      transition: opacity 0.2s;
+    }
+
+    .lightbox-close:hover { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<!-- Lightbox -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close" onclick="closeLightbox()">&#10005;</span>
+  <img class="lightbox-img" id="lightboxImg" src="" alt=""/>
+</div>
+
+<div class="page-wrap">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <p class="section-label">Teaching Portfolio</p>
+    <h1>Example Labs, Assignments &amp; Syllabi</h1>
+    <p>Selected coursework from courses at the University of Richmond and Michigan State University — ranging from foundational GIS labs to capstone projects conducted with real institutional partners.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SPOTLIGHT: CARTOGRAPHY CAPSTONE
+  ═══════════════════════════════════════ -->
+  <div>
+    <p class="section-label">Featured Assignment</p>
+
+    <div class="spotlight">
+      <!-- Header -->
+      <div class="spotlight-header">
+        <span class="spotlight-tag">&#9733;&nbsp; Crown Jewel</span>
+        <h2>Cartography Capstone:<br>Mapping for University Partners</h2>
+        <div class="spotlight-meta">
+          <div class="meta-chip"><span class="dot"></span> GEOG 248: Cartography &amp; Spatial Data Visualization</div>
+          <div class="meta-chip"><span class="dot"></span> ArcGIS Pro &nbsp;·&nbsp; R &nbsp;·&nbsp; Excel</div>
+          <div class="meta-chip"><span class="dot"></span> Partners: Alumni Relations · Annual Giving · Admissions</div>
+          <div class="meta-chip"><span class="dot"></span> Running 4+ years</div>
+        </div>
+      </div>
+
+      <!-- Photos row -->
+      <div class="photos-row">
+        <img src="images/IMG_2607.JPG" alt="Students presenting to university partners in the Spatial Analysis Lab"/>
+        <img src="images/IMG_1645.JPG" alt="University partners and students gathered in the SAL for the final presentation"/>
+      </div>
+
+      <!-- Body -->
+      <div class="spotlight-body">
+
+        <!-- Description -->
+        <div class="spotlight-desc">
+          <p>Too often, coursework lives inside a bubble — canned datasets with no real stakes. This project breaks that pattern. Students in Cartography and Spatial Data Visualization use real institutional data to produce professional-grade maps for three university offices that have genuine questions about their own communities: Alumni Relations, Annual Giving, and Admissions.</p>
+          <p>The data is intentionally simple — alumni by ZIP code, anonymized donor records, prospective students' top program choices — but the messy, real-world nature of it means students must actually clean, pivot, join, and aggregate before they can make a single map. Every group produces a required portfolio of map types (choropleth, bivariate, 3D, dot density), goes through peer critique, and iterates before the final presentation.</p>
+        </div>
+
+        <!-- How It Works -->
+        <div class="how-it-works">
+          <h3>How It Works</h3>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-text"><strong>Partners pose questions.</strong> Each office brings genuine questions — where do our donors live? Where are prospective students coming from? How does alumni concentration relate to giving rates?</div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-text"><strong>Students receive messy data.</strong> Raw ZIP-code tables, flat donor exports, and program preference lists require real data wrangling in R or Excel before they can be joined to census geographies.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-text"><strong>Groups produce a map portfolio.</strong> Each team creates choropleth, 3D, bivariate, and dot-density maps across multiple spatial scales, practicing every major visualization type from the course.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-text"><strong>Peer critique and iteration.</strong> Maps go through an in-class feedback round before the final presentation — the same iterative process used by professional cartographers.</div>
+            </div>
+            <div class="step">
+              <div class="step-num">5</div>
+              <div class="step-text"><strong>Public presentation to 15+ guests.</strong> On the last day of class, the lab fills with staff from all three offices. Students present their findings and the conversation that follows — about geography, stewardship, and what it means to give back — is often the most memorable part of the course.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gallery -->
+        <div class="gallery-section">
+          <h3>Selected Student Maps</h3>
+
+          <!-- Alumni Relations -->
+          <div class="gallery-group">
+            <div class="gallery-group-label">Alumni Relations</div>
+            <div class="gallery-grid-3">
+              <div class="gallery-item" onclick="openLightbox('images/SpiderStates.png')">
+                <img src="images/SpiderStates.png" alt="Total Alumni Per State cartogram"/>
+                <div class="gallery-caption">Total Alumni Per State — Cartogram</div>
+              </div>
+              <div class="gallery-item" onclick="openLightbox('images/MSASpiders.png')">
+                <img src="images/MSASpiders.png" alt="Spiders in Cities — Alumni by MSA"/>
+                <div class="gallery-caption">Alumni by Metropolitan Statistical Area</div>
+              </div>
+              <div class="gallery-item" onclick="openLightbox('images/SpidersVA.png')">
+                <img src="images/SpidersVA.png" alt="Total UR Alumni by County in Virginia"/>
+                <div class="gallery-caption">Alumni by County — Virginia</div>
+              </div>
+              <div class="gallery-item" onclick="openLightbox('images/Spidersinstate.png')">
+                <img src="images/Spidersinstate.png" alt="How many Spiders are in my state"/>
+                <div class="gallery-caption">Alumni Count by State — Choropleth</div>
+              </div>
+              <div class="gallery-item" onclick="openLightbox('images/SpidersandIncome.png')">
+                <img src="images/SpidersandIncome.png" alt="UR Alumni and Median Household Income — Bivariate"/>
+                <div class="gallery-caption">Alumni × Median Household Income — Bivariate</div>
+              </div>
+              <div class="gallery-item" onclick="openLightbox('images/Spiderclubs.png')">
+                <img src="images/Spiderclubs.png" alt="Reconnecting Our Web — Alumni Clubs"/>
+                <div class="gallery-caption">Alumni Clubs and Gaps — Reconnecting Our Web</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Annual Giving -->
+          <div class="gallery-group">
+            <div class="gallery-group-label">Annual Giving</div>
+            <div class="gallery-grid-2">
+              <div class="gallery-item" onclick="openLightbox('images/AnnualGivingDay.png')">
+                <img src="images/AnnualGivingDay.png" alt="Alumni Participation in UR Here Giving Day — World Map"/>
+                <div class="gallery-caption">Global Alumni Participation — UR Here Giving Day 2019-2025</div>
+              </div>
+              <div class="gallery-item" onclick="openLightbox('images/AlumniandDonor.png')">
+                <img src="images/AlumniandDonor.png" alt="Alumni and Donor Counts by MSA — Bivariate"/>
+                <div class="gallery-caption">Alumni &amp; Donor Counts by MSA — Bivariate Choropleth</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Admissions -->
+          <div class="gallery-group">
+            <div class="gallery-group-label">Admissions Office</div>
+            <div class="gallery-grid-2">
+              <div class="gallery-item" onclick="openLightbox('images/AlumniandFutureStudents.png')">
+                <img src="images/AlumniandFutureStudents.png" alt="Alumni and Prospective Students — Bivariate"/>
+                <div class="gallery-caption">Alumni &amp; Prospective Students — Bivariate Map with Analysis</div>
+              </div>
+              <div class="gallery-item" onclick="openLightbox('images/AdmissionsSlide.png')">
+                <img src="images/AdmissionsSlide.png" alt="Most Popular Academic Interests of Prospective Students by State"/>
+                <div class="gallery-caption">Most Popular Academic Interests of Prospective Students by State</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bonus -->
+          <div class="gallery-group">
+            <div class="gallery-group-label">Fan Favorite</div>
+            <div class="gallery-grid-2">
+              <div class="gallery-item" onclick="openLightbox('images/SpidersandSpiders.png')">
+                <img src="images/SpidersandSpiders.png" alt="Spiders vs Spiders — documented spider attacks and UR alumni"/>
+                <div class="gallery-caption">Spiders vs. Spiders — UR Alumni &amp; Documented Spider Attacks</div>
+              </div>
+              <div class="gallery-item" onclick="openLightbox('images/Alumni3DMap.jpg')">
+                <img src="images/Alumni3DMap.jpg" alt="Homeownership Patterns of UR Alumni in Virginia — 3D Map"/>
+                <div class="gallery-caption">Homeownership Patterns in Virginia — 3D Choropleth</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quotes -->
+        <div class="quotes-section">
+          <h3>In Their Words — University Partners</h3>
+          <div>
+            <blockquote>
+              Thank you for allowing us to be a part of this project! I know everyone on the team was so impressed with the students and their work. They always make me so proud to be an alum. After the presentation, I asked if this was their last obligation before heading home for break and they said yes. They proceeded to tell me how this was their favorite place and they didn't want to leave. They weren't talking about campus — they were talking about the community you've created for them.
+              <span class="quote-source">— University Partner, Alumni Relations Office</span>
+            </blockquote>
+          </div>
+          <div>
+            <blockquote>
+              I'm glad our data could help bring their ideas to life. The connections they explored between alumni, admissions, and giving were fascinating, and the post-presentation discussion was a highlight. I can't wait for next time!
+              <span class="quote-source">— University Partner, Annual Giving Office</span>
+            </blockquote>
+          </div>
+        </div>
+
+      </div><!-- /.spotlight-body -->
+    </div><!-- /.spotlight -->
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       OTHER LABS
+  ═══════════════════════════════════════ -->
+  <div>
+    <p class="section-label">Selected Labs &amp; Assignments</p>
+    <div class="labs-section" id="labsSection">
+
+      <!-- Lab 1 -->
+      <div class="lab-card">
+        <div class="lab-card-header" onclick="toggleLab(this)">
+          <div class="lab-accent"></div>
+          <div class="lab-title-block">
+            <span class="lab-name">Rising Sea Levels — Raster Analysis</span>
+            <div class="lab-chips">
+              <span class="chip chip-course">GEOG 260 Intro GIS</span>
+              <span class="chip chip-software">ArcGIS Pro</span>
+            </div>
+          </div>
+          <div class="expand-toggle"><span class="expand-icon">&#9660;</span></div>
+        </div>
+        <div class="lab-body">
+          <p class="lab-purpose">Students use raster calculator, Model Builder, and DEM data to model sea level rise scenarios around Virginia Beach — learning where to find and extract elevation data, how to analyze it spatially, and how to communicate uncertainty through scenario comparison.</p>
+          <a class="lab-link" href="https://docs.google.com/document/d/1zW63HpMmqEvUB34yGVCgoyN3LyX7FBGmdsPij5UrkQQ/edit?usp=sharing" target="_blank">View Lab Instructions &#8599;</a>
+        </div>
+      </div>
+
+      <!-- Lab 2 -->
+      <div class="lab-card">
+        <div class="lab-card-header" onclick="toggleLab(this)">
+          <div class="lab-accent"></div>
+          <div class="lab-title-block">
+            <span class="lab-name">Getting Reacquainted with GIS</span>
+            <div class="lab-chips">
+              <span class="chip chip-course">GEOG 325 Intermediate GIS</span>
+              <span class="chip chip-software">ArcGIS Pro · ArcMap · QGIS</span>
+            </div>
+          </div>
+          <div class="expand-toggle"><span class="expand-icon">&#9660;</span></div>
+        </div>
+        <div class="lab-body">
+          <p class="lab-purpose">Using UFO sighting data in Michigan across three time periods, students visualize and analyze spatial patterns in three different GIS platforms simultaneously — building both software fluency and critical comparison skills between tools.</p>
+          <a class="lab-link" href="https://docs.google.com/document/d/1RcxrI2WtlupmYXZF_1EfO-M3lDsSuI0FalqoWauLVFQ/edit?usp=sharing" target="_blank">View Lab Instructions &#8599;</a>
+        </div>
+      </div>
+
+      <!-- Lab 3 -->
+      <div class="lab-card">
+        <div class="lab-card-header" onclick="toggleLab(this)">
+          <div class="lab-accent"></div>
+          <div class="lab-title-block">
+            <span class="lab-name">Webscraping &amp; Webmapping GIS Jobs</span>
+            <div class="lab-chips">
+              <span class="chip chip-course">GEOG 425 Problems in GIS</span>
+              <span class="chip chip-software">Python · Leaflet</span>
+            </div>
+          </div>
+          <div class="expand-toggle"><span class="expand-icon">&#9660;</span></div>
+        </div>
+        <div class="lab-body">
+          <p class="lab-purpose">Students scrape GIS job postings from the Indeed API, learn how APIs and Python functions work, build an interactive Leaflet web map of the results, and deploy it online — connecting technical skills to a directly practical question: where can this degree take me?</p>
+          <a class="lab-link" href="https://docs.google.com/document/d/1LjZ-i9OqJr49W6Y8ImwDRDpN0IxnrHA4ND3mjFtxJu0/edit?usp=sharing" target="_blank">View Lab Instructions &#8599;</a>
+        </div>
+      </div>
+
+      <!-- Lab 4 -->
+      <div class="lab-card">
+        <div class="lab-card-header" onclick="toggleLab(this)">
+          <div class="lab-accent"></div>
+          <div class="lab-title-block">
+            <span class="lab-name">Geographically Weighted Regression</span>
+            <div class="lab-chips">
+              <span class="chip chip-course">GEOG 866 Spatial Data Analysis (Grad)</span>
+              <span class="chip chip-software">R</span>
+            </div>
+          </div>
+          <div class="expand-toggle"><span class="expand-icon">&#9660;</span></div>
+        </div>
+        <div class="lab-body">
+          <p class="lab-purpose">A graduate-level lab walking students through multicollinearity testing and global regression before comparing results with geographically weighted statistics — using county-level USGS water usage data to illustrate why spatial non-stationarity matters and when local models outperform global ones.</p>
+          <a class="lab-link" href="https://docs.google.com/document/d/1uEtbMzbN8v2tqMyLPubPi4hfAq5_5w_RsmclbRXhUCc/edit?usp=sharing" target="_blank">View Lab Instructions &#8599;</a>
+        </div>
+      </div>
+
+      <!-- Lab 5 -->
+      <div class="lab-card">
+        <div class="lab-card-header" onclick="toggleLab(this)">
+          <div class="lab-accent"></div>
+          <div class="lab-title-block">
+            <span class="lab-name">Amazon Roads Mapping — ABSAT</span>
+            <div class="lab-chips">
+              <span class="chip chip-course">GEOG 260 Intro GIS</span>
+              <span class="chip chip-software">ArcGIS Pro · Planet Imagery</span>
+            </div>
+          </div>
+          <div class="expand-toggle"><span class="expand-icon">&#9660;</span></div>
+        </div>
+        <div class="lab-body">
+          <p class="lab-purpose">Students contribute directly to the Amazon Borderlands Spatial Analysis Team (ABSAT) roads database — manually digitizing illegal logging roads in the Peru-Brazil borderlands from satellite imagery, working in pairs on assigned sections, then merging their work into the shared dataset. The lab has collectively mapped over 20,000 km of roads.</p>
+          <a class="lab-link" href="https://docs.google.com/document/d/1lckcx8hPmICexkYFR2qE8zX12Eb39e8I1-BKzAITYpg/edit?usp=sharing" target="_blank">View Lab Instructions &#8599;</a>
+        </div>
+      </div>
+
+      <!-- Lab 6 -->
+      <div class="lab-card">
+        <div class="lab-card-header" onclick="toggleLab(this)">
+          <div class="lab-accent"></div>
+          <div class="lab-title-block">
+            <span class="lab-name">OpenStreetMap for Campus</span>
+            <div class="lab-chips">
+              <span class="chip chip-course">GEOG 365 Advanced GIS</span>
+              <span class="chip chip-software">OSM · ArcGIS Pro</span>
+            </div>
+          </div>
+          <div class="expand-toggle"><span class="expand-icon">&#9660;</span></div>
+        </div>
+        <div class="lab-body">
+          <p class="lab-purpose">Students add and edit at least 20 features in OpenStreetMap using the web editor and a mobile collector app (Vespucci or GoMap!!), then cross-check their partner's contributions for quality. The assignment closes with before-and-after maps showing what they added — connecting students to open-access data infrastructure and community science.</p>
+          <a class="lab-link" href="https://docs.google.com/document/d/1lckcx8hPmICexkYFR2qE8zX12Eb39e8I1-BKzAITYpg/edit?usp=sharing" target="_blank">View Lab Instructions &#8599;</a>
+        </div>
+      </div>
+
+      <!-- Lab 7 -->
+      <div class="lab-card">
+        <div class="lab-card-header" onclick="toggleLab(this)">
+          <div class="lab-accent"></div>
+          <div class="lab-title-block">
+            <span class="lab-name">Giles County Pizza Network Analysis</span>
+            <div class="lab-chips">
+              <span class="chip chip-course">GEOG 365 Advanced GIS</span>
+              <span class="chip chip-software">ArcGIS Pro</span>
+            </div>
+          </div>
+          <div class="expand-toggle"><span class="expand-icon">&#9660;</span></div>
+        </div>
+        <div class="lab-body">
+          <p class="lab-purpose">Students build a road network dataset for a small rural Virginia county and use it to solve routing, service area analysis, and location-allocation problems through the framing of pizza delivery — making abstract network analysis immediately intuitive and memorable.</p>
+          <a class="lab-link" href="https://docs.google.com/document/d/18jbBdhxmzqmaxJEhXFwUyh68h_ZwCVqwucNo6hWb0h8/edit?usp=sharing" target="_blank">View Lab Instructions &#8599;</a>
+        </div>
+      </div>
+
+      <!-- Lab 8 -->
+      <div class="lab-card">
+        <div class="lab-card-header" onclick="toggleLab(this)">
+          <div class="lab-accent"></div>
+          <div class="lab-title-block">
+            <span class="lab-name">Mortality Spatial Autocorrelation in the South</span>
+            <div class="lab-chips">
+              <span class="chip chip-course">GEOG 365 Advanced GIS</span>
+              <span class="chip chip-software">ArcGIS Pro</span>
+            </div>
+          </div>
+          <div class="expand-toggle"><span class="expand-icon">&#9660;</span></div>
+        </div>
+        <div class="lab-body">
+          <p class="lab-purpose">Students join mortality rate data for nine southern states to county shapefiles and run Getis-Ord GI*, Global Moran's I, and Local Moran's I under different neighborhood definitions — building side-by-side comparison maps and writing critically about which spatial weights are most theoretically appropriate, how edge effects distort results, and what spatial outliers reveal.</p>
+          <a class="lab-link" href="https://docs.google.com/document/d/1f6ONjN3eSK2uNBbwSTQZIPw0rutCyGr-7Tjd2oZIi-w/edit?usp=sharing" target="_blank">View Lab Instructions &#8599;</a>
+        </div>
+      </div>
+
+      <!-- Lab 9 -->
+      <div class="lab-card">
+        <div class="lab-card-header" onclick="toggleLab(this)">
+          <div class="lab-accent"></div>
+          <div class="lab-title-block">
+            <span class="lab-name">Urban Geography Final Project</span>
+            <div class="lab-chips">
+              <span class="chip chip-course">GEOG 413 Urban Geography</span>
+              <span class="chip chip-software">R · Census API</span>
+            </div>
+          </div>
+          <div class="expand-toggle"><span class="expand-icon">&#9660;</span></div>
+        </div>
+        <div class="lab-body">
+          <p class="lab-purpose">Each student selects a unique metropolitan statistical area and writes a research paper connecting one of the semester's core urban theory topics — gentrification, residential segregation, agglomeration economies, political fragmentation — to their chosen city using R and Census API data. Final presentations reveal how the same structural problems surface across wildly different urban contexts, building both technical proficiency and geographic imagination.</p>
+          <a class="lab-link" href="https://docs.google.com/document/d/1C-HQjN8c70iwsnPhDVyeUFJsEqjEZpRK/edit?usp=sharing" target="_blank">View Assignment Instructions &#8599;</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SYLLABI
+  ═══════════════════════════════════════ -->
+  <div>
+    <p class="section-label">Course Syllabi</p>
+    <div class="syllabi-section">
+      <div class="syllabi-header">
+        <h2>Syllabi</h2>
+      </div>
+      <div class="syllabi-groups">
+        <div class="syllabi-group ur-group">
+          <div class="syllabi-group-label">University of Richmond</div>
+          <ul class="syllabus-list">
+            <li><a href="https://docs.google.com/document/d/1zkWyTeMLUnIrpNW0MUsLNGLbTNHaHty2KBx0UkuJdtI/edit?usp=sharing" target="_blank">
+              <span class="arrow">&#8599;</span>
+              GEOG 365: Advanced GIS
+            </a></li>
+            <li><a href="https://docs.google.com/document/d/14-AEh_1ZeQtsjqkjAfodHRGoDy8d5U7EKi_CWxsxRtQ/edit?usp=sharing" target="_blank">
+              <span class="arrow">&#8599;</span>
+              GEOG 260: Introduction to GIS
+            </a></li>
+            <li><a href="https://docs.google.com/document/d/1MxdbyIpeUUKLhykOXkxp8GFfNrcwoF5ygHmOteKgR4U/edit?usp=sharing" target="_blank">
+              <span class="arrow">&#8599;</span>
+              GEOG 248: Cartography and Spatial Data Visualization
+            </a></li>
+          </ul>
+        </div>
+        <div class="syllabi-group msu-group">
+          <div class="syllabi-group-label">Michigan State University</div>
+          <ul class="syllabus-list">
+            <li><a href="https://drive.google.com/file/d/1g6XwY2SCZEzoZoWsqUnH3DwiqVee9X08/view?usp=sharing" target="_blank">
+              <span class="arrow">&#8599;</span>
+              GEOG 413: Urban Geography
+            </a></li>
+            <li><a href="https://drive.google.com/file/d/1t6qZc_TpUUeKpureez5GisO__4fG_hDO/view?usp=sharing" target="_blank">
+              <span class="arrow">&#8599;</span>
+              GEOG 325: Intermediate GIS
+            </a></li>
+            <li><a href="https://drive.google.com/file/d/1ynuc5lSFtEcMfVodngNqEgwFBFWkQSuI0FalqoWauLVFQ/view?usp=sharing" target="_blank">
+              <span class="arrow">&#8599;</span>
+              GEOG 425: Problems in GIS — Capstone
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.page-wrap -->
+
+<script>
+  function toggleLab(header) {
+    const body = header.parentElement.querySelector('.lab-body');
+    const icon = header.querySelector('.expand-icon');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    icon.style.transform = isOpen ? '' : 'rotate(180deg)';
+  }
+
+  function openLightbox(src) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightbox').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+</body>
+</html>
