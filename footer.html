@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1A1714;
+      font-family: 'DM Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    footer {
+      background: #1A1714;
+      color: #fff;
+      padding: 2rem 2.5rem 1.5rem;
+    }
+
+    .footer-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      flex-wrap: wrap;
+    }
+
+    .footer-name h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .footer-name p {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.45);
+      margin-top: 0.3rem;
+      line-height: 1.5;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .footer-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 3px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    .footer-link.email {
+      background: #990000;
+      color: #fff;
+    }
+
+    .footer-link.email:hover {
+      background: #b30000;
+    }
+
+    .footer-link.secondary {
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.75);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .footer-link.secondary:hover {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+    }
+
+    .footer-link svg {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .footer-bottom p {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .footer-bottom a {
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+      font-size: 0.68rem;
+      transition: color 0.2s;
+    }
+
+    .footer-bottom a:hover {
+      color: rgba(255,255,255,0.7);
+    }
+  </style>
+</head>
+<body>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-name">
+        <h2>Kyle Redican, Ph.D.</h2>
+        <p>Director of Spatial Analysis Lab &amp; Assistant Teaching Faculty<br>
+        Department of Geography, Environment, and Sustainability<br>
+        University of Richmond</p>
+      </div>
+      <div class="footer-links">
+        <a class="footer-link email" href="mailto:Kredican@richmond.edu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+          </svg>
+          Kredican@richmond.edu
+        </a>
+        <a class="footer-link secondary" href="https://sites.google.com/view/redicanteaching/cv?authuser=0" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+          </svg>
+          CV
+        </a>
+        <a class="footer-link secondary" href="https://www.linkedin.com/in/kyle-redican-90748143/" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+          </svg>
+          LinkedIn
+        </a>
+        <a class="footer-link secondary" href="https://orcid.org/0009-0000-5655-9717" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm-1-9.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm6 9.5h-2v-4c0-.55-.45-1-1-1s-1 .45-1 1v4h-2V9h2v.75c.45-.55 1.1-.75 1.75-.75C14.55 9 16 10.34 16 12.25V16z"/>
+          </svg>
+          ORCID
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Kyle Redican &nbsp;&middot;&nbsp; University of Richmond</p>
+      <a href="https://sites.google.com/view/redicanteaching/contact" target="_blank">Contact &rarr;</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
