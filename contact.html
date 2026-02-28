@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact – Kyle Redican</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ur:       #990000;
+      --ur-light: #99000010;
+      --bg:       #FAFAF7;
+      --surface:  #FFFFFF;
+      --border:   #E8E4DC;
+      --text:     #1A1714;
+      --muted:    #7A7570;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      padding: 2rem;
+      min-height: 100vh;
+    }
+
+    .page-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header */
+    .page-header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 1.25rem;
+    }
+
+    .page-header .eyebrow {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ur);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .page-header p {
+      margin-top: 0.6rem;
+      font-size: 0.93rem;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 560px;
+    }
+
+    /* Primary email card */
+    .email-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--ur);
+      border-radius: 4px;
+      padding: 1.75rem 2rem;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    }
+
+    .email-card .label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ur);
+      margin-bottom: 0.6rem;
+    }
+
+    .email-card .address {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 1.1rem;
+    }
+
+    .email-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--ur);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.6rem 1.25rem;
+      border-radius: 3px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .email-btn:hover { background: #b30000; }
+
+    .email-btn svg {
+      width: 14px; height: 14px;
+    }
+
+    /* Welcome topics */
+    .topics-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+    }
+
+    .topics-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .topics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+    }
+
+    .topic {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      padding: 0.75rem 0.9rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+    }
+
+    .topic-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--ur);
+      flex-shrink: 0;
+      margin-top: 0.35rem;
+    }
+
+    .topic-text {
+      font-size: 0.85rem;
+      line-height: 1.45;
+      color: var(--text);
+    }
+
+    .topic-text strong {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.15rem;
+    }
+
+    .topic-text span {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* Profile links */
+    .profiles-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+    }
+
+    .profiles-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .profiles-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+    }
+
+    .profile-list {
+      list-style: none;
+    }
+
+    .profile-list li {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .profile-list li:last-child {
+      border-bottom: none;
+    }
+
+    .profile-list a {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: background 0.15s;
+    }
+
+    .profile-list a:hover {
+      background: var(--bg);
+    }
+
+    .profile-icon {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .profile-icon svg {
+      width: 16px; height: 16px;
+    }
+
+    .profile-icon.linkedin { background: #0077b510; color: #0077b5; }
+    .profile-icon.orcid    { background: #a6ce3910; color: #5a9a00; }
+    .profile-icon.cv       { background: var(--ur-light); color: var(--ur); }
+
+    .profile-info { flex: 1; }
+
+    .profile-info strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+
+    .profile-info span {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .profile-arrow {
+      font-size: 0.85rem;
+      color: var(--muted);
+      transition: color 0.15s, transform 0.15s;
+    }
+
+    .profile-list a:hover .profile-arrow {
+      color: var(--ur);
+      transform: translateX(3px);
+    }
+
+    /* Location */
+    .location-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .location-icon {
+      width: 36px; height: 36px;
+      background: var(--ur-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--ur);
+    }
+
+    .location-icon svg { width: 16px; height: 16px; }
+
+    .location-text h3 {
+      font-size: 0.88rem;
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+
+    .location-text p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- Header -->
+  <div class="page-header">
+    <p class="eyebrow">Get in Touch</p>
+    <h1>Contact</h1>
+    <p>I welcome messages from collaborators, journalists, students interested in research opportunities, and anyone working at the intersection of geography, data, and community.</p>
+  </div>
+
+  <!-- Email -->
+  <div class="email-card">
+    <p class="label">Email</p>
+    <p class="address"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="367d4453525f55575876445f555e5b59585218535243">[email&#160;protected]</a></p>
+    <a class="email-btn" href="/cdn-cgi/l/email-protection#bcf7ced9d8d5dfddd2fcced5dfd4d1d3d2d892d9d8c9">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+      </svg>
+      Send an Email
+    </a>
+  </div>
+
+  <!-- Welcome topics -->
+  <div class="topics-card">
+    <h2>I'm happy to hear from you about&hellip;</h2>
+    <div class="topics-grid">
+      <div class="topic">
+        <div class="topic-dot"></div>
+        <div class="topic-text">
+          <strong>Research Collaboration</strong>
+          <span>ACS uncertainty, community-engaged GIS, urban heat, or anything spatial</span>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-dot"></div>
+        <div class="topic-text">
+          <strong>Media &amp; Press Inquiries</strong>
+          <span>Redistricting, data centers, housing &amp; school segregation, GenAI in education</span>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-dot"></div>
+        <div class="topic-text">
+          <strong>Student Research Opportunities</strong>
+          <span>Undergraduate and graduate students interested in joining a project</span>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-dot"></div>
+        <div class="topic-text">
+          <strong>Geospatial Consulting</strong>
+          <span>Faculty, nonprofits, and community organizations with mapping or spatial analysis needs</span>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-dot"></div>
+        <div class="topic-text">
+          <strong>Speaking &amp; Panels</strong>
+          <span>GIS education, community-engaged scholarship, AI in the classroom</span>
+        </div>
+      </div>
+      <div class="topic">
+        <div class="topic-dot"></div>
+        <div class="topic-text">
+          <strong>Just to Say Hello</strong>
+          <span>Former students, colleagues, or anyone who stumbled onto this site</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profiles -->
+  <div class="profiles-card">
+    <div class="profiles-header">
+      <h2>Find Me Online</h2>
+    </div>
+    <ul class="profile-list">
+      <li>
+        <a href="https://sites.google.com/view/redicanteaching/cv?authuser=0" target="_blank">
+          <div class="profile-icon cv">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
+            </svg>
+          </div>
+          <div class="profile-info">
+            <strong>Curriculum Vitae</strong>
+            <span>Full academic CV — publications, teaching, service, and more</span>
+          </div>
+          <span class="profile-arrow">&#8599;</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://www.linkedin.com/in/kyle-redican-90748143/" target="_blank">
+          <div class="profile-icon linkedin">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+            </svg>
+          </div>
+          <div class="profile-info">
+            <strong>LinkedIn</strong>
+            <span>linkedin.com/in/kyle-redican-90748143</span>
+          </div>
+          <span class="profile-arrow">&#8599;</span>
+        </a>
+      </li>
+      <li>
+        <a href="https://orcid.org/0009-0000-5655-9717" target="_blank">
+          <div class="profile-icon orcid">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14H8V8h2v8zm-1-9.75a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zM17 16h-2v-3.5c0-.83-.67-1.5-1.5-1.5S12 11.67 12 12.5V16h-2V9h2v.75c.46-.56 1.15-.75 1.75-.75C15.55 9 17 10.34 17 12.25V16z"/>
+            </svg>
+          </div>
+          <div class="profile-info">
+            <strong>ORCID</strong>
+            <span>orcid.org/0009-0000-5655-9717</span>
+          </div>
+          <span class="profile-arrow">&#8599;</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Location -->
+  <div class="location-card">
+    <div class="location-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/>
+      </svg>
+      <h3>Spatial Analysis Lab &nbsp;&middot;&nbsp; University of Richmond</h3>
+      <p>Department of Geography, Environment, and Sustainability<br>
+      211 Richmond Way, Richmond, Virginia 23173</p>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
